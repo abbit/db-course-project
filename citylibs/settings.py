@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rangefilter',
     'libraries',
     'readers',
     'publications',
@@ -109,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Novosibirsk'
 
 USE_I18N = True
 
@@ -124,3 +125,51 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# set my ordering list
+ADMIN_ORDERING = {
+    'libraries': [
+        'Library',
+        'ReadingRoom',
+        'Librarian',
+        'PublicationsFlowHistory',
+    ],
+    'readers': [
+        'Reader',
+        'StudentReader',
+        'TeacherReader',
+        'WorkerReader',
+        'RetireeReader',
+    ],
+    'publications': [
+        'Author',
+        'LiteracyWork',
+        'TextbookLiteracyWork',
+        'NovelLiteracyWork',
+        'PoemLiteracyWork',
+        'ArticleLiteracyWork',
+        'ScientificLiteracyWork',
+        'Publication',
+        'BookPublication',
+        'JournalPublication',
+        'PaperPublication',
+    ],
+}
+
+
+def get_app_list(self, request):
+    app_dict = self._build_app_dict(request)
+    for app_name in app_dict.keys():
+        if app_name == 'auth':
+            continue
+
+        app = app_dict[app_name]
+        if app_name in ADMIN_ORDERING:
+            app['models'].sort(key=lambda x: ADMIN_ORDERING[app_name].index(x['object_name']))
+
+        yield app
+
+
+from django.contrib import admin
+
+admin.AdminSite.get_app_list = get_app_list

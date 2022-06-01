@@ -13,7 +13,7 @@ class Library(Model):
     address = CharField(max_length=255, unique=True)
 
     def __str__(self):
-        return self.title
+        return f'{self.title}'
 
 
 class ReadingRoom(Model):
@@ -25,7 +25,7 @@ class ReadingRoom(Model):
     library = ForeignKey(Library, on_delete=CASCADE)
 
     def __str__(self):
-        return self.name
+        return f'{self.name}'
 
 
 class Librarian(Model):
@@ -33,7 +33,7 @@ class Librarian(Model):
     reading_room = ForeignKey(ReadingRoom, on_delete=CASCADE)
 
     def __str__(self):
-        return self.full_name
+        return f'{self.full_name}'
 
 
 class StorageLocation(Model):
@@ -43,13 +43,16 @@ class StorageLocation(Model):
     rack_no = PositiveIntegerField(validators=[MinValueValidator(1)])
     shelf_no = PositiveIntegerField(validators=[MinValueValidator(1)])
     reading_room = ForeignKey(ReadingRoom, on_delete=CASCADE)
-    publications = ManyToManyField(Publication)
+    publications = ManyToManyField(Publication, blank=True)
 
     def __str__(self):
         return f'Rack №{self.rack_no}, shelf №{self.shelf_no}'
 
 
 class PublicationsFlowHistory(Model):
+    class Meta:
+        verbose_name_plural = 'publications flow history'
+
     librarian = ForeignKey(Librarian, on_delete=RESTRICT)
     publication = ForeignKey(Publication, on_delete=RESTRICT)
     count = IntegerField(validators=[validate_not_zero])

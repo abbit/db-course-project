@@ -4,8 +4,19 @@ from django.db.models import *
 from libraries.validators import validate_date_in_past
 
 
+class Author(Model):
+    full_name = CharField(max_length=255)
+    nationality = CharField(max_length=255, null=True, blank=True)
+    birth_date = DateField(validators=[validate_date_in_past])
+    death_date = DateField(validators=[validate_date_in_past], null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.full_name}'
+
+
 class LiteracyWork(Model):
     title = CharField(max_length=255)
+    authors = ManyToManyField(Author, related_name='literacy_works')
 
     def __str__(self):
         return f'{self.title}'
@@ -29,17 +40,6 @@ class ArticleLiteracyWork(LiteracyWork):
 
 class ScientificLiteracyWork(LiteracyWork):
     subject = CharField(max_length=255)
-
-
-class Author(Model):
-    full_name = CharField(max_length=255)
-    nationality = CharField(max_length=255, null=True, blank=True)
-    birth_date = DateField(validators=[validate_date_in_past])
-    death_date = DateField(validators=[validate_date_in_past], null=True, blank=True)
-    literacy_works = ManyToManyField(LiteracyWork)
-
-    def __str__(self):
-        return f'{self.full_name}'
 
 
 class Publication(Model):

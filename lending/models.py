@@ -15,6 +15,9 @@ class LendingRestriction(Model):
 
 
 class PublicationsOrdersHistory(Model):
+    class Meta:
+        verbose_name_plural = 'publications orders history'
+
     publication = ForeignKey(Publication, on_delete=RESTRICT)
     reader = ForeignKey(Reader, on_delete=RESTRICT)
     lending_restriction = ForeignKey(LendingRestriction, on_delete=RESTRICT)

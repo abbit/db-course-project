@@ -8,5 +8,5 @@ def validate_not_zero(value):
 
 
 def validate_date_in_past(date):
-    if date > now():
+    if date > now().date():
         raise ValidationError("The date cannot be in the future!")

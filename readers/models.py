@@ -11,7 +11,7 @@ class Reader(Model):
     issuer_library = ForeignKey(Library, on_delete=RESTRICT)
 
     def __str__(self):
-        return self.full_name
+        return f'{self.full_name}'
 
 
 class StudentReader(Reader):
