@@ -13,6 +13,9 @@ class LendingRestriction(Model):
     library_rooms_only = BooleanField()
     time_limit = DurationField(null=True, blank=True)
 
+    def __str__(self):
+        return f'{self.name}'
+
 
 class PublicationsOrdersHistory(Model):
     class Meta:

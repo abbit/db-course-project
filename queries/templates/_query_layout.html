@@ -1,0 +1,23 @@
+{% extends "_base.html" %}
+
+{% block content %}
+    <div class="d-flex flex-nowrap">
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; height: 100vh;">
+            <ul class="nav nav-pills flex-column mb-auto">
+                {% for link in links %}
+                    <li class="nav-item">
+                        <a href="{{ link|slugify }}"
+                           class="nav-link {% if request.resolver_match.url_name|cut:'_' == link|cut:' ' %}active{% endif %}"
+                           aria-current="page">
+                            {{ link|capfirst }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <main class="container w-75">
+            <h1 class="my-4">{% block title %}{% endblock %}</h1>
+            {% block main %}{% endblock %}
+        </main>
+    </div>
+{% endblock %}

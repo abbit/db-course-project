@@ -21,6 +21,6 @@ admin.site.site_title = 'Citylibs'
 admin.site.index_title = "Welcome to Citylibs"
 
 urlpatterns = [
-    path('', admin.site.urls),
-    path('libraries/', include('libraries.urls')),
+    path('', include('queries.urls')),
+    path('admin/', admin.site.urls),
 ]

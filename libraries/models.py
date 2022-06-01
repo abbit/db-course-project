@@ -56,3 +56,4 @@ class PublicationsFlowHistory(Model):
     librarian = ForeignKey(Librarian, on_delete=RESTRICT)
     publication = ForeignKey(Publication, on_delete=RESTRICT)
     count = IntegerField(validators=[validate_not_zero])
+    record_timestamp = DateTimeField(auto_now_add=True)

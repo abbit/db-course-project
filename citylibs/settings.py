@@ -37,10 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rangefilter',
+    'crispy_forms',
+    'django_tables2',
     'libraries',
     'readers',
     'publications',
     'lending',
+    'queries',
 ]
 
 MIDDLEWARE = [
@@ -173,3 +176,6 @@ def get_app_list(self, request):
 from django.contrib import admin
 
 admin.AdminSite.get_app_list = get_app_list
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
